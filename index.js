@@ -18,19 +18,28 @@ app.use(bodyParser.json());
 
 // Rota para enviar notificações
 app.post('/send-notification', (req, res) => {
-    const { registrationToken, title, body } = req.body;
+    const { registrationToken, title, body, data } = req.body;
 
     if (!registrationToken || !title || !body) {
         return res.status(400).send(`Token de registro, título e corpo são obrigatórios.\nToken: ${registrationToken}\nTitulo: ${title}\nCorpo: ${body}`);
     }
 
-    const message = {
-        notification: {
-            title: title,
-            body: body
-        },
-        token: registrationToken
-    };
+    let message = {}
+    if (title) {
+        message = {
+            notification: {
+                title: title,
+                body: body
+            },
+            token: registrationToken,
+            data: data
+        };
+    } else {
+        message = {
+            token: registrationToken,
+            data: data
+        };
+    }
 
     admin.messaging().send(message)
         .then((response) => {
