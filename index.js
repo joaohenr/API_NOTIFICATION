@@ -18,31 +18,24 @@ app.use(bodyParser.json());
 
 // Rota para enviar notificações
 app.post('/send-notification', (req, res) => {
-    const { registrationToken, title, body, data } = req.body;
+    const { token, notification, data, priority } = req.body;
 
-    if (!registrationToken) {
-        return res.status(400).send(`Token de registro, título e corpo são obrigatórios.\nToken: ${registrationToken}\nTitulo: ${title}\nCorpo: ${body}`);
+    if (!token) {
+        return res.status(400).send(`Token de registro é obrigatório.`);
     }
 
-    let message = {}
-    if (title) {
-        message = {
-            notification: {
-                title: title,
-                body: body
-            },
-            token: registrationToken,
-            data: data
-        };
-    } else {
-        message = {
-            token: registrationToken,
-            data: data
-        };
-    }
+    const message = {
+        notification: notification,
+        token: token,
+        data: data,
+        android: {
+            priority: priority ?? 'high'  // Indicação de alta prioridade
+        }
+    };
 
     admin.messaging().send(message)
         .then((response) => {
+            console.log(response)
             return res.status(200).send('Notificação enviada com sucesso!');
         })
         .catch((error) => {
