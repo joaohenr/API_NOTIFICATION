@@ -25,11 +25,11 @@ app.post('/send-notification', (req, res) => {
     }
 
     const message = {
-        notification: notification,
+        notification: notification || {},
         token: token,
-        data: data,
+        data: data || {},
         android: {
-            priority: priority ?? 'high'  // Indicação de alta prioridade
+            priority: priority || 'high'  // Indicação de alta prioridade
         }
     };
 
