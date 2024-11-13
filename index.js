@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.post('/send-notification', (req, res) => {
     const { registrationToken, title, body, data } = req.body;
 
-    if (!registrationToken || !title || !body) {
+    if (!registrationToken) {
         return res.status(400).send(`Token de registro, título e corpo são obrigatórios.\nToken: ${registrationToken}\nTitulo: ${title}\nCorpo: ${body}`);
     }
 
