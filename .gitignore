@@ -1,0 +1,22 @@
+# Dependências do Node.js
+node_modules/
+
+# Arquivos de log
+*.log
+
+# Arquivos de ambiente
+.env
+
+# Diretórios de build
+dist/
+build/
+
+# Outros arquivos temporários
+*.tmp
+*.swp
+
+# Sistema de arquivos do macOS
+.DS_Store
+
+# Arquivos de configuração do Visual Studio Code
+.vscode/
