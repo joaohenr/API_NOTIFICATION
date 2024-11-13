@@ -19,7 +19,6 @@ app.use(bodyParser.json());
 // Rota para enviar notificações
 app.post('/send-notification', (req, res) => {
     const { registrationToken, title, body } = req.body;
-    console.log(req)
 
     if (!registrationToken || !title || !body) {
         return res.status(400).send(`Token de registro, título e corpo são obrigatórios.\nToken: ${registrationToken}\nTitulo: ${title}\nCorpo: ${body}`);
@@ -35,11 +34,9 @@ app.post('/send-notification', (req, res) => {
 
     admin.messaging().send(message)
         .then((response) => {
-            console.log('Mensagem enviada com sucesso:', response);
             return res.status(200).send('Notificação enviada com sucesso!');
         })
         .catch((error) => {
-            console.log('Erro ao enviar a mensagem:', error);
             return res.status(500).send('Erro ao enviar a notificação.');
         });
 });
